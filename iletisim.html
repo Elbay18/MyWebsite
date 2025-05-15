@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>İletişim | Kişisel Web Sitesi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="css/iletisim.css" />
+</head>
+<body>
+  <!-- NAVBAR VUE DIŞINDA -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto" id="navbar-links">
+          <li class="nav-item"><a class="nav-link fw-bold" href="index.html">Ana Sayfa</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold" href="about.html">Hakkımda</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold" href="cv.html">CV</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold" href="sehrim.html">Şehrim</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold" href="miras.html">Mirasımız</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold" href="ilgi.html">İlgi Alanlarım</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold active" href="iletisim.html">İletişim</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- VUE APP -->
+  <div id="app" class="contact-container">
+    <h2 class="contact-title">Bize Ulaşın</h2>
+    <p class="text-center">Herhangi bir görüş, öneri ya da soru için aşağıdaki formu doldurabilirsiniz.</p>
+    
+    <form @submit.prevent="validateForm">
+      <div class="mb-3">
+        <label class="form-label">Adınız</label>
+        <input type="text" id="user_name" class="form-control" v-model="form.user_name">
+        <div class="text-danger" v-if="errors.user_name">{{ errors.user_name }}</div>
+      </div>
+      
+      <div class="mb-3">
+        <label class="form-label">E-posta</label>
+        <input type="text" id="email" class="form-control" v-model="form.email">
+        <div class="text-danger" v-if="errors.email">{{ errors.email }}</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Telefon</label>
+        <input type="text" id="phone" class="form-control" v-model="form.phone">
+        <div class="text-danger" v-if="errors.phone">{{ errors.phone }}</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Mesajınız</label>
+        <textarea id="message" class="form-control" rows="5" v-model="form.message"></textarea>
+        <div class="text-danger" v-if="errors.message">{{ errors.message }}</div>
+      </div>
+
+      <div class="text-center mt-3">
+        <button type="button" class="btn btn-info px-4 me-2" @click="validateForm">Vue ile Kontrol Et</button>
+        <button type="button" class="btn btn-warning px-4" onclick="jsIleKontrolEt()">JS ile Kontrol Et</button>
+        <button type="submit" class="btn btn-success px-4 me-2">Gönder</button>
+        <button type="button" class="btn btn-secondary px-4 me-2" @click="clearForm">Temizle</button>
+        <a v-if="isLoggedIn" href="mesajlar.html" class="btn btn-outline-primary px-4">Son Gönderilen Mesajlar</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- İLETİŞİM BİLGİLERİ -->
+  <div class="contact-info">
+    <p><i class="bi bi-telephone-fill me-2"></i><strong>Telefon:</strong> +90 554 121 88 45</p>
+    <p><i class="bi bi-envelope-fill me-2"></i><strong>E-posta:</strong> elbeymamedov7@gmail.com</p>
+    <p><i class="bi bi-geo-alt-fill me-2"></i><strong>Adres:</strong> Sakarya Üniversitesi, Türkiye</p>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/vue@3"></script>
+
+  <script>
+  function jsIleKontrolEt() {
+    const name = document.getElementById('user_name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    let errors = [];
+
+    if (!name) errors.push("Ad boş bırakılamaz.");
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) errors.push("Geçerli bir e-posta giriniz.");
+    if (!phone || !/^\d+$/.test(phone)) errors.push("Telefon sadece rakamlardan oluşmalı.");
+    if (!message) errors.push("Mesaj boş bırakılamaz.");
+
+    if (errors.length > 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'JavaScript Kontrol Hatası!',
+        html: errors.join('<br>'),
+        confirmButtonColor: '#dc3545'
+      });
+    } else {
+      Swal.fire({
+        icon: 'success',
+        title: 'Tebrikler!',
+        text: 'JS kontrolü başarılı.',
+        confirmButtonColor: '#28a745'
+      });
+    }
+  }
+</script>
+Ç
+  <!-- FIREBASE ve VUE SCRIPT -->
+  <script type="module">
+    
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+    
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyCzUpqZhad-VHD6iqKiU2tzAt1SWP63eqE",
+      authDomain: "mywebsite-33b9c.firebaseapp.com",
+      projectId: "mywebsite-33b9c",
+      storageBucket: "mywebsite-33b9c.appspot.com",
+      messagingSenderId: "374864219588",
+      appId: "1:374864219588:web:8967c1d62b30f3b511a891",
+      measurementId: "G-VXBBY77QDC",
+      databaseURL: "https://mywebsite-33b9c-default-rtdb.firebaseio.com"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          form: {
+            user_name: '',
+            email: '',
+            phone: '',
+            message: ''
+          },
+          errors: {},
+          isLoggedIn: false
+        };
+      },
+      mounted() {
+        auth.onAuthStateChanged(user => {
+          this.isLoggedIn = !!user;
+        });
+      },
+      methods: {
+        validateForm() {
+          this.errors = {};
+          if (!this.form.user_name) {
+            this.errors.user_name = 'Adınızı giriniz.';
+          }
+          if (!this.form.email) {
+            this.errors.email = 'E-posta giriniz.';
+          } else if (!/^\S+@\S+\.\S+$/.test(this.form.email)) {
+            this.errors.email = 'Geçerli bir e-posta adresi giriniz.';
+          }
+          if (!this.form.phone) {
+            this.errors.phone = 'Telefon numarası giriniz.';
+          } else if (!/^\d+$/.test(this.form.phone)) {
+            this.errors.phone = 'Telefon sadece rakamlardan oluşmalıdır.';
+          }
+          if (!this.form.message) {
+            this.errors.message = 'Lütfen bir mesaj yazınız.';
+          }
+
+          if (Object.keys(this.errors).length === 0) {
+            this.submitForm();
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Hata!',
+              text: 'Lütfen formu kontrol ediniz.',
+              confirmButtonColor: '#dc3545'
+            });
+          }
+        },
+
+        submitForm() {
+          const formData = new FormData();
+          formData.append('Adınız', this.form.user_name);
+          formData.append('E-posta', this.form.email);
+          formData.append('Telefon', this.form.phone);
+          formData.append('Mesaj', this.form.message);
+
+          const user = auth.currentUser;
+
+          if (user) {
+            const messageRef = push(ref(db, `messages/${user.uid}`));
+            set(messageRef, {
+              user_name: this.form.user_name,
+              email: this.form.email,
+              phone: this.form.phone,
+              message: this.form.message,
+              timestamp: Date.now()
+            });
+          }
+
+          fetch("https://formspree.io/f/xwpovanz", {
+            method: "POST",
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          })
+          .then(response => {
+            if (response.ok) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Mesajınız gönderildi!',
+                text: 'En kısa sürede sizinle iletişime geçeceğiz.',
+                confirmButtonColor: '#28a745'
+              }).then(() => {
+                window.location.href = "mesajlar.html";
+              });
+              this.clearForm();
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Hata!',
+                text: 'Mesaj gönderilirken bir sorun oluştu.',
+                confirmButtonColor: '#dc3545'
+              });
+            }
+          })
+          .catch(() => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Sunucu hatası!',
+              text: 'Sunucuya ulaşılamadı.',
+              confirmButtonColor: '#dc3545'
+            });
+          });
+        },
+
+        clearForm() {
+          this.form = {
+            user_name: '',
+            email: '',
+            phone: '',
+            message: ''
+          };
+          this.errors = {};
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
