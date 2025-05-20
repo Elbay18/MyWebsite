@@ -1,0 +1,51 @@
+ /* Kart Boyutlandırması */
+ .card {
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .card-body {
+    padding: 15px;
+    text-align: center;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+    color: #6c757d;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-columns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .card-columns .col-md-4 {
+    margin-bottom: 20px;
+  }
+
+  /* Navbar Düzenlemesi */
+  nav .navbar-brand {
+    font-size: 1.4rem;
+  }
+
+  nav .nav-link {
+    font-size: 1rem;
+  }

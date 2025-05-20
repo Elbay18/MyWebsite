@@ -1,0 +1,85 @@
+.card-title {
+    text-align: center;
+  }
+
+  /* Kartları eşit yükseklikte ve düzgün hizalanmış yap */
+  .card.h-100 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Kart içeriği hizalı ve düzgün olsun */
+  .card .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Hover efekti: büyüme ve gölge */
+  .card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Kart görselleri düzgün ve orantılı kalsın */
+  .card-img-top {
+    object-fit: cover;
+    height: 200px;
+  }
+
+  /* Yeni özellikler için stil */
+  .icon {
+    font-size: 1.7rem;
+    margin-right: 10px;
+  }
+
+  .contact-icons a {
+    margin: 0 10px;
+    font-size: 1.7rem;
+  }
+
+  .contact-icons a:hover {
+    color: #007bff;
+  }
+
+  .footer {
+    margin-top: 50px;
+  }
+  .icon {
+    color: #4b4b4b;
+    margin-right: 6px;
+  }
+  
+  .card-title .icon {
+    font-size: 1.2rem;
+  }
+  
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .footer {
+    font-size: 0.9rem;
+  }
+  .icon {
+    color: #4b4b4b;
+    margin-right: 6px;
+  }
+  
+  .card-title .icon {
+    font-size: 1.2rem;
+  }
+  
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .footer {
+    font-size: 0.9rem;
+  }
+  
